@@ -10,9 +10,10 @@
   --green:#2faa63;--gold:#cf9d3f;--purple:#9466cf;--teal:#2f9fbf;--red:#e06a4f;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
+html{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
 button, input, select, textarea { font-family: inherit; }
 body{font-family:'Phetsarath OT','Phetsarath', sans-serif !important;font-size:15px;line-height:1.5;min-height:100vh;
-  transition:background .6s var(--soft),color .4s;overflow-x:hidden}
+  transition:background .6s var(--soft),color .4s;overflow-x:hidden;touch-action:manipulation;-webkit-overflow-scrolling:touch}
 .en{font-family:'Inter','Phetsarath OT','Phetsarath',sans-serif}
 /* themes */
 body[data-theme=light]{--bg1:#eaeefc;--bg2:#f5f7fd;--bg3:#e3ebfc;--text:#13192e;--muted:#5b6480;
@@ -67,7 +68,7 @@ body[data-theme=goldsoft] .seg button.on{color:#fff}
 .chip:hover{transform:translateY(-1px)}
 .chip.on{background:var(--accent);color:#fff;border-color:transparent}
 .chip.on.cz{background:var(--gold);color:#1c1305}
-main{padding:16px 18px 90px}
+main{padding:16px 18px 110px}
 .editbanner{display:none;border-radius:13px;padding:9px 13px;font-size:12px;font-weight:600;margin-bottom:12px;color:var(--green);border:1px solid var(--green);background:color-mix(in srgb,var(--green) 9%,transparent)}
 body.edit .editbanner{display:block}
 /* tree */
@@ -135,7 +136,7 @@ body.edit [data-edit]{background:color-mix(in srgb,var(--gold) 20%,transparent);
 .unchanged{margin-top:18px;font-size:12px;color:var(--muted);text-align:center}
 .legend{margin:18px 4px;font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:13px;justify-content:center}
 .legend span{display:inline-flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
-.credit{position:fixed;left:11px;bottom:11px;z-index:30;font-size:9.5px;padding:6px 12px;border-radius:20px;color:var(--text);
+.credit{position:fixed;left:11px;bottom:11px;z-index:36;font-size:9.5px;padding:6px 12px;border-radius:20px;color:var(--text);
   background:var(--glass);border:1px solid var(--bd);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:var(--shadow2)}
 .credit b{color:var(--accent2)}
 .toast{position:fixed;left:50%;bottom:48px;transform:translateX(-50%) translateY(16px);z-index:40;padding:10px 18px;border-radius:30px;font-size:12.5px;color:#fff;background:var(--accent);opacity:0;transition:.3s var(--soft);box-shadow:var(--shadow)}
@@ -202,7 +203,7 @@ body.edit [data-edit]{background:color-mix(in srgb,var(--gold) 20%,transparent);
 .popitem:hover{background:var(--glass2)}
 .popitem .ic{width:18px;text-align:center;font-size:15px;color:var(--accent);font-weight:700}
 @media(max-width:640px){
- main{padding:12px 11px 80px}
+ main{padding:12px 11px 140px}
  .cbar{justify-content:center}
  .seg{flex-wrap:nowrap;width:100%;overflow-x:auto;scrollbar-width:none}
  .seg::-webkit-scrollbar{display:none}
@@ -217,6 +218,10 @@ body.edit [data-edit]{background:color-mix(in srgb,var(--gold) 20%,transparent);
  .dgrid,.gpanel.eq .dgrid,.gpanel.lo .dgrid{max-width:94vw}
  .dcard{width:43vw;max-width:230px}
  .mcard{max-height:88vh}
+ .dcard{transition:none}
+ #view{-webkit-overflow-scrolling:touch}
+ main{-webkit-overflow-scrolling:touch}
+ .mc2,.dcard,.cmpcard{transform:translateZ(0)}
 }
 
 .credit{font-size:8px;padding:4px 8px;left:8px;bottom:8px}
@@ -225,7 +230,7 @@ body.edit [data-edit]{background:color-mix(in srgb,var(--gold) 20%,transparent);
 .mgov{font-size:10.5px;color:var(--muted);text-align:center;margin:0 0 6px;font-weight:600}
 .msect{font-size:10.5px;font-weight:800;color:var(--accent);margin:11px 3px 6px;letter-spacing:.3px}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.mc2{position:relative;display:flex;align-items:center;gap:6px;padding:8px 8px;border-radius:12px;background:var(--glass);border:1px solid var(--bd);border-left:3px solid var(--accent);box-shadow:var(--shadow2);cursor:pointer;min-height:42px}
+.mc2{position:relative;display:flex;align-items:center;gap:6px;padding:8px 8px;border-radius:12px;background:var(--glass);border:1px solid var(--bd);border-left:3px solid var(--accent);box-shadow:var(--shadow2);cursor:pointer;min-height:42px;touch-action:manipulation}
 .mc2 .mdot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
 .mc2 .mnm{font-size:11px;font-weight:700;color:var(--head);line-height:1.22;flex:1;font-family:'Phetsarath OT','Phetsarath',serif}
 .mc2 .mcount{font-size:8.5px;font-weight:700;color:var(--muted);flex:0 0 auto;background:var(--glass2);border-radius:10px;padding:1px 6px}
@@ -235,7 +240,7 @@ body.edit [data-edit]{background:color-mix(in srgb,var(--gold) 20%,transparent);
 .mbar button{border:1px solid var(--accent);background:var(--glass);border-radius:20px;padding:7px 15px;font-family:inherit;font-size:11.5px;font-weight:700;color:var(--accent);cursor:pointer}
 @media(max-width:640px){.hint{display:none}}
 
-.chartwrap{overflow:auto;-webkit-overflow-scrolling:touch;padding:6px 0 18px;cursor:grab;border-radius:16px}
+.chartwrap{overflow:auto;-webkit-overflow-scrolling:touch;padding:6px 0 18px;cursor:grab;border-radius:16px;touch-action:pan-x pan-y}
 .chartwrap.drag{cursor:grabbing}
 .chart{--z:1;transform:scale(var(--z));transform-origin:top center;transition:transform .18s var(--soft);min-width:max-content;margin:0 auto;padding:10px 28px}
 .chart ul{position:relative;padding-top:24px;display:flex;justify-content:center}
@@ -477,12 +482,15 @@ body[data-theme=light] .hn-cnt{color:#fff}
  .tr-pill{flex:0 0 auto;white-space:nowrap;font-size:11px;padding:7px 13px}
 }
 
-.ticker{margin:16px 2px 2px;border-radius:12px;height:30px;display:flex;align-items:center;overflow:hidden;background:color-mix(in srgb,var(--accent) 12%,var(--glass));border:1px solid var(--bd);box-shadow:var(--shadow2)}
+.ticker{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:35;max-width:min(720px,calc(100% - 22px));width:max-content;border-radius:14px;padding:9px 15px;display:flex;align-items:flex-start;gap:8px;background:color-mix(in srgb,var(--bg2) 88%,var(--accent));border:1px solid var(--bd);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);animation:tkrise .45s var(--soft) both}
 .ticker.hide{display:none}
-.ticker-track{display:inline-block;white-space:nowrap;padding-left:100%;animation:tickmove 34s linear infinite;font-size:12px;font-weight:600;color:var(--head);font-family:'Phetsarath OT','Phetsarath',sans-serif}
-.ticker:hover .ticker-track{animation-play-state:paused}
-@keyframes tickmove{from{transform:translateX(0)}to{transform:translateX(-100%)}}
-@media(max-width:640px){.ticker{height:26px}.ticker-track{font-size:10.5px;animation-duration:26s}}
+.ticker .tk-ic{flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--accent2);margin-top:6px;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent2) 22%,transparent)}
+.ticker .tk-body{flex:1;min-width:0}
+.ticker-track{display:inline;white-space:normal;font-size:12px;font-weight:600;color:var(--head);line-height:1.42;font-family:'Phetsarath OT','Phetsarath',sans-serif}
+.ticker-cur{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:1px;vertical-align:-2px;animation:blink 1s steps(1) infinite;border-radius:1px}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+@keyframes tkrise{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media(max-width:640px){.ticker{bottom:10px;padding:8px 12px;max-width:calc(100% - 16px)}.ticker-track{font-size:10.5px}}
 
 /* ===== Premium org-chart connectors & glass boxes ===== */
 .fullc .frow{position:relative;padding-top:30px}
@@ -524,6 +532,9 @@ body[data-theme=light] .hn-cnt{color:#fff}
 @media (hover:none) and (pointer:coarse){
   #fx,#glow{display:none !important}
   *{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+  #bottomglow{display:none !important}
+  body,main,#view,.mwrap,.mgrid,.chartwrap{-webkit-overflow-scrolling:touch}
+  .dcard,.mc2,.cmpcard,.nodebox{transition:none !important}
 }
 </style>
 </head>
@@ -568,7 +579,7 @@ body[data-theme=light] .hn-cnt{color:#fff}
   <div class="editbanner glass" id="editbanner">✎ Edit mode on — tap text to type; saves automatically.</div>
   <div id="view"><div class="hint">Tap a department to see divisions &amp; functions</div><div class="fcenter"><div id="fwrap"><div class="fullc"><div class="cbox board"><div class="cb-t">Board of Directors</div></div><div class="conn"></div><div class="commrow"><div class="compill">Monetary Policy Committee</div><div class="compill">Financial Stability Committee</div><div class="compill">Audit Committee</div></div><div class="conn"></div><div class="cbox gov"><div class="cb-t">Board of Governors, Bank of the Lao PDR</div></div><div class="conn"></div><div class="frow"><div class="fcol"><div class="ghead">Local Units (Branches)</div><div class="cconn"></div><div class="cstack"><div class="dcard br" data-branch="0"><div class="dc-t">BOL Northern Branch — Oudomxay</div></div><div class="dcard br" data-branch="1"><div class="dc-t">BOL Northern Branch — Luang Prabang</div></div><div class="dcard br" data-branch="2"><div class="dc-t">BOL Northern Branch — Xieng Khuang</div></div><div class="dcard br" data-branch="3"><div class="dc-t">BOL Central Branch — Savannakhet</div></div><div class="dcard br" data-branch="4"><div class="dc-t">BOL Southern Branch — Champasak</div></div><div class="dcard br" data-branch="5"><div class="dc-t">Golden Triangle SEZ Rep. Office (Bokeo)</div></div><div class="dcard br" data-branch="6"><div class="dc-t">Boten–Dan Ngam Rep. Office (Luang Namtha)</div></div></div></div><div class="fcol"><div class="ghead">Central-level Departments</div><div class="cconn"></div><div class="colcards"><div class="cstack"><div class="dcard " data-dept="monpol"><div class="dc-t"><span data-edit="" data-id="monpol" data-fld="nameEn">Monetary Policy Department</span></div><div class="dc-t2">ກົມນະໂຍບາຍເງິນຕາ</div><div class="badges"><span class="b core">Core</span></div></div><div class="dcard merged" data-dept="cbsup"><div class="dc-t"><span data-edit="" data-id="cbsup" data-fld="nameEn">Commercial Bank Supervision Department</span></div><div class="dc-t2">ກົມຄຸ້ມຄອງທະນາຄານທຸລະກິດ</div><div class="badges"><span class="b core">Core</span><span class="b merged">Merged</span></div></div><div class="dcard " data-dept="pay"><div class="dc-t"><span data-edit="" data-id="pay" data-fld="nameEn">Payment Systems Department</span></div><div class="dc-t2">ກົມຄຸ້ມຄອງລະບົບການຊໍາລະ</div><div class="badges"><span class="b core">Core</span></div></div><div class="dcard " data-dept="fx"><div class="dc-t"><span data-edit="" data-id="fx" data-fld="nameEn">Foreign Exchange Management Department</span></div><div class="dc-t2">ກົມຄຸ້ມຄອງເງິນຕາຕ່າງປະເທດ</div><div class="badges"><span class="b core">Core</span></div></div><div class="dcard " data-dept="bankops"><div class="dc-t"><span data-edit="" data-id="bankops" data-fld="nameEn">Banking Operations Department</span></div><div class="dc-t2">ກົມບໍລິການທະນາຄານ</div><div class="badges"><span class="b core">Core</span></div></div><div class="dcard " data-dept="issue"><div class="dc-t"><span data-edit="" data-id="issue" data-fld="nameEn">Issue (Currency) Department</span></div><div class="dc-t2">ກົມພິມຈໍາໜ່າຍ</div><div class="badges"><span class="b core">Core</span></div></div><div class="dcard new" data-dept="stat"><div class="dc-t"><span data-edit="" data-id="stat" data-fld="nameEn">Statistics Department</span></div><div class="dc-t2">ກົມສະຖິຕິ</div><div class="badges"><span class="b core">Core</span><span class="b new">New</span></div></div></div><div class="cstack"><div class="dcard new" data-dept="consumer"><div class="dc-t"><span data-edit="" data-id="consumer" data-fld="nameEn">Financial Consumer Protection Department</span></div><div class="dc-t2">ກົມປົກປ້ອງຜູ້ຊົມໃຊ້</div><div class="badges"><span class="b core">Core</span><span class="b new">New</span></div></div><div class="dcard renamed" data-dept="plan"><div class="dc-t"><span data-edit="" data-id="plan" data-fld="nameEn">Planning &amp; Cooperation Department</span></div><div class="dc-t2">ກົມແຜນການ ແລະ ການຮ່ວມມື</div><div class="badges"><span class="b core">Core</span><span class="b renamed">Renamed</span></div></div><div class="dcard cat-support " data-dept="office"><div class="dc-t"><span data-edit="" data-id="office" data-fld="nameEn">Cabinet Office</span></div><div class="dc-t2">ຫ້ອງການ</div><div class="badges"><span class="b support">Support</span></div></div><div class="dcard cat-support " data-dept="hr"><div class="dc-t"><span data-edit="" data-id="hr" data-fld="nameEn">Organization &amp; Personnel Department</span></div><div class="dc-t2">ກົມຈັດຕັ້ງ ແລະ ພະນັກງານ</div><div class="badges"><span class="b support">Support</span></div></div><div class="dcard cat-support " data-dept="audit"><div class="dc-t"><span data-edit="" data-id="audit" data-fld="nameEn">Internal Audit Department</span></div><div class="dc-t2">ກົມກວດກາ</div><div class="badges"><span class="b support">Support</span></div></div><div class="dcard cat-support " data-dept="acct"><div class="dc-t"><span data-edit="" data-id="acct" data-fld="nameEn">Accounting &amp; Finance Department</span></div><div class="dc-t2">ກົມບັນຊີ ແລະ ການເງິນ</div><div class="badges"><span class="b support">Support</span></div></div><div class="dcard cat-support " data-dept="it"><div class="dc-t"><span data-edit="" data-id="it" data-fld="nameEn">Information Technology Department</span></div><div class="dc-t2">ກົມເຕັກໂນໂລຊີຂໍ້ມູນຂ່າວສານ</div><div class="badges"><span class="b support">Support</span></div></div></div></div></div><div class="fcol"><div class="ghead">Budget-holding Dept-equivalent Units</div><div class="cconn"></div><div class="cstack"><div class="dcard " data-dept="sec"><div class="dc-t"><span data-edit="" data-id="sec" data-fld="nameEn">Securities Commission Office (LSCO)</span></div><div class="dc-t2">ສໍານັກງານ ຄຄຄ ຫຼັກຊັບ (ສຄຄຊ)</div><div class="badges"><span class="b core">Core</span><span class="b equiv">Dept-equivalent</span></div></div><div class="dcard " data-dept="amlo"><div class="dc-t"><span data-edit="" data-id="amlo" data-fld="nameEn">Anti-Money Laundering Intelligence Office (AMLIO)</span></div><div class="dc-t2">ສໍານັກງານຂໍ້ມູນຕ້ານການຟອກເງິນ (ສຕຟງ)</div><div class="badges"><span class="b core">Core</span><span class="b equiv">Dept-equivalent</span></div></div><div class="dcard cat-support " data-dept="institute"><div class="dc-t"><span data-edit="" data-id="institute" data-fld="nameEn">Banking Institute</span></div><div class="dc-t2">ສະຖາບັນການທະນາຄານ</div><div class="badges"><span class="b support">Support</span><span class="b equiv">Dept-equivalent</span></div></div><div class="dcard cat-support reclassified" data-dept="printing"><div class="dc-t"><span data-edit="" data-id="printing" data-fld="nameEn">BOL Banknote Printing House</span></div><div class="dc-t2">ໂຮງພິມທະນະບັດ ທຫລ</div><div class="badges"><span class="b support">Support</span><span class="b reclassified">Reclassified</span><span class="b equiv">Dept-equivalent</span></div></div></div></div></div></div></div></div></div>
   <div class="legend" id="legend"><span><i style="background:var(--green)"></i> New / In</span><span><i style="background:var(--gold)"></i> Merged</span><span><i style="background:var(--purple)"></i> Renamed</span><span><i style="background:var(--teal)"></i> Reclassified</span><span><i style="background:var(--red)"></i> Transferred out</span></div>
-  <div class="ticker hide" id="ticker"><span class="ticker-track" id="tickerText"></span></div>
+  <div class="ticker hide" id="ticker"><span class="tk-ic"></span><span class="tk-body"><span class="ticker-track" id="tickerText"></span><span class="ticker-cur" id="tickerCur"></span></span></div>
 </main>
 </div>
 <div class="modal" id="modal"><div class="mcard glass" id="mcard"><button class="mclose" id="mclose">✕</button><div class="mh"><div class="cb-t" style="font-size:17px">ກົມແຜນການ ແລະ ການຮ່ວມມື <span class="b renamed">ປ່ຽນຊື່</span></div><div class="dc-t2" style="font-size:12px">Planning &amp; International Cooperation Department</div><div class="sm">↪ ປ່ຽນຈາກ: ກົມຮ່ວມມືສາກົນ</div></div><div class="mnote">ℹ <span data-edit="" data-id="plan" data-fld="note" contenteditable="true">ປ່ຽນຊື່ ແລະ ຂະຫຍາຍໜ້າທີ່ — ເພີ່ມ ວາງແຜນ ແລະ ປະເມີນຍຸດທະສາດ.</span></div><div class="mdivs"><div class="mdiv s-new"><div class="md-t"><span data-edit="" data-id="plan" data-fld="n0" contenteditable="true">ພະແນກຄົ້ນຄວ້າແຜນຍຸດທະສາດ ທຫລ</span> <span class="pill new">ໃໝ່</span></div><div class="md-j"><span data-edit="" data-id="plan" data-fld="j0" contenteditable="true">ຄົ້ນຄວ້າ ແລະ ອອກແບບຂອບ/ແບບຟອມມາດຕະຖານໃນການຂຶ້ນແຜນຍຸດທະສາດ ທຫລ ໂດຍແຕ່ລະກົມເປັນເຈົ້າການໃນການກຳນົດເນື້ອໃນວິຊາສະເພາະ.</span></div></div><div class="mdiv s-in"><div class="md-t"><span data-edit="" data-id="plan" data-fld="n1" contenteditable="true">ພະແນກວາງແຜນ ແລະ ປະເມີນຍຸດທະສາດ</span> <span class="pill in">ໂອນເຂົ້າ</span></div><div class="md-j"><span data-edit="" data-id="plan" data-fld="j1" contenteditable="true">ສັງລວມ, ກວດກາ ແລະ ສ້າງບົດລາຍງານຜົນການປະເມີນການຈັດຕັ້ງປະຕິບັດແຜນຍຸດທະສາດ ເພື່ອສະເໜີຄະນະຜູ້ວ່າການ ທຫລ (ໂອນຈາກ ຫ້ອງການ); ກຳນົດດັດຊະນີຊີ້ວັດຜົນງານຫຼັກ (KPIs) ຮ່ວມກັບບັນດາກົມ ພ້ອມຕິດຕາມ ແລະ ປະເມີນຄວາມຄືບໜ້າເປັນໄລຍະ.</span></div><div class="mmv in">↩ ໂອນມາຈາກ: ຫ້ອງການ ທຫລ</div></div><div class="mdiv s-kept"><div class="md-t"><span data-edit="" data-id="plan" data-fld="n2" contenteditable="true">ພະແນກຮ່ວມມືສອງຝ່າຍ</span> </div><div class="md-j"><span data-edit="" data-id="plan" data-fld="j2" contenteditable="true">ປະສານ ແລະ ຮ່ວມມືກັບຄູ່ຮ່ວມມືສອງຝ່າຍ (ໂອນຈາກ ກົມຮ່ວມມືສາກົນ ເດີມ).</span></div></div><div class="mdiv s-kept"><div class="md-t"><span data-edit="" data-id="plan" data-fld="n3" contenteditable="true">ພະແນກຮ່ວມມືຫຼາຍຝ່າຍ</span> </div><div class="md-j"><span data-edit="" data-id="plan" data-fld="j3" contenteditable="true">ປະສານ ແລະ ຮ່ວມມືກັບອົງການການເງິນສາກົນ (IMF, WB, ADB); ປະສານງານ, ອອກແຈ້ງການແນະນຳ ແລະ ສັງລວມຮ່າງແຜນຍຸດທະສາດການພັດທະນາລະບົບທະນາຄານ ແລະ ແຜນດຳເນີນງານປະຈຳປີ ຂອງ ທຫລ (ໂອນບາງສ່ວນຈາກ ຫ້ອງການ).</span></div></div></div></div></div>
@@ -672,17 +683,20 @@ function applyUI(){const t=L();document.documentElement.lang=lang;
   $('#legend').innerHTML=`<span><i style="background:var(--green)"></i> ${t.lgNew}</span><span><i style="background:var(--gold)"></i> ${t.lgMerged}</span><span><i style="background:var(--purple)"></i> ${t.lgRenamed}</span><span><i style="background:var(--teal)"></i> ${t.lgReclass}</span><span><i style="background:var(--red)"></i> ${t.lgOut}</span>`;
   $('#chips').style.display=(view==='compare'||view==='transfer')?'none':'flex';
   if($('#legend'))$('#legend').style.display=(view==='transfer')?'none':'flex';
-  var _tk=$('#ticker'),_tkt=$('#tickerText');if(_tk&&_tkt){if(view==='full'||view==='tree'){_tk.classList.remove('hide');_tkt.textContent=(filter==='orig')?t.msgOrig:t.msgAfter;}else{_tk.classList.add('hide');}}
+  var _tk=$('#ticker'),_tkt=$('#tickerText');if(_tk&&_tkt){_tk.classList.remove('hide');var _msg=(filter==='orig')?t.msgOrig:t.msgAfter;if(_tk._last!==_msg){_tk._last=_msg;typeTicker(_msg);}}
   $$('#viewseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
   var _el=$('#editLbl');if(_el)_el.textContent=editMode?t.editOn:t.edit;var _sl=$('#shareLbl');if(_sl)_sl.textContent=(lang==='en'?'Save / Share':'ບັນທຶກ / ແບ່ງປັນ');var _rl=$('#resetLbl');if(_rl)_rl.textContent=(lang==='en'?'Reset edits':'ລ້າງການແກ້ໄຂ');
 }
+var _tkTimer=null;
+function typeTicker(text){var el=document.getElementById('tickerText'),cur=document.getElementById('tickerCur');if(!el)return;if(_tkTimer){clearTimeout(_tkTimer);_tkTimer=null;}el.textContent='';if(cur)cur.style.display='inline-block';var i=0,spd=Math.max(9,Math.min(28,2600/Math.max(1,text.length)));(function step(){if(i<=text.length){el.textContent=text.slice(0,i);i++;_tkTimer=setTimeout(step,spd);}else{_tkTimer=null;}})();}
 function render(){applyUI();if(view==='compare')renderCompare();else if(view==='transfer')renderTransfer();else if(view==='full')renderFull();else renderTree();}
 
 var ZOOM=1,_resizeInit=false,_mBind=false;
 function cap(s){return s[0].toUpperCase()+s.slice(1);}
 function setZoom(z){ZOOM=Math.min(1.8,Math.max(.3,z));var ow=document.getElementById('orgwrap')||document.getElementById('chart');if(ow)ow.style.transform='scale('+ZOOM+')';}
 function fit(){var ow=document.getElementById('orgwrap')||document.getElementById('chart');if(!ow)return;ow.style.transform='scale(1)';var cont=document.getElementById('stage')||document.getElementById('chartwrap');var top=(cont||ow).getBoundingClientRect().top;var availW=((cont||ow).clientWidth||window.innerWidth)-8;var availH=window.innerHeight-top-14;var s=Math.min(1.3,availW/ow.scrollWidth,availH/ow.scrollHeight);s=Math.max(.3,s);ZOOM=s;ow.style.transform='scale('+s+')';var st=document.getElementById('stage');if(st)st.style.height=availH+'px';var cw2=document.getElementById('chartwrap');if(cw2){cw2.style.height=availH+'px';}}
-function enablePan(w){if(!w||w._pan)return;w._pan=1;var down=false,sx,sy,sl,st;w.addEventListener('pointerdown',function(e){if(e.target.closest('.nodebox[data-dept]'))return;down=true;w.classList.add('drag');sx=e.clientX;sy=e.clientY;sl=w.scrollLeft;st=w.scrollTop;});window.addEventListener('pointermove',function(e){if(!down)return;w.scrollLeft=sl-(e.clientX-sx);w.scrollTop=st-(e.clientY-sy);});window.addEventListener('pointerup',function(){down=false;w.classList.remove('drag');});}
+var _isMob='ontouchstart' in window||navigator.maxTouchPoints>1;
+function enablePan(w){if(!w||w._pan)return;w._pan=1;if(_isMob)return;var down=false,sx,sy,sl,st;w.addEventListener('pointerdown',function(e){if(e.target.closest('.nodebox[data-dept]'))return;down=true;w.classList.add('drag');sx=e.clientX;sy=e.clientY;sl=w.scrollLeft;st=w.scrollTop;});window.addEventListener('pointermove',function(e){if(!down)return;w.scrollLeft=sl-(e.clientX-sx);w.scrollTop=st-(e.clientY-sy);});window.addEventListener('pointerup',function(){down=false;w.classList.remove('drag');});}
 function cNode(n){var kids='';if(n.children&&n.children.length){if(n.wrap){kids='<div class="deptwrap '+(n.wrapCls||'')+'">'+n.children.map(function(c){return '<div class="nodebox '+c.cls+'" '+(c.dept?'data-dept="'+c.dept+'"':'')+'>'+c.html+'</div>';}).join('')+'</div>';}else{kids='<ul>'+n.children.map(cNode).join('')+'</ul>';}}return '<li><div class="nodebox '+n.cls+'" '+(n.dept?'data-dept="'+n.dept+'"':'')+'>'+n.html+'</div>'+kids+'</li>';}
 function scaleMobileFull(){var fc=document.querySelector('.fullc'),fw=document.getElementById('fwrap');if(!fc||!fw)return;var frow=fc.querySelector('.frow');fc.style.transform='none';fc.style.width='max-content';fw.style.width='';fw.style.height='';fw.style.overflow='visible';if(frow)frow.style.flexWrap='nowrap';var host=document.getElementById('view');var availW=((host?host.clientWidth:window.innerWidth)-6);var natW=fc.scrollWidth,natH=fc.scrollHeight;var sc=Math.min(availW/natW,1);if(sc>0&&isFinite(sc)){fc.style.transformOrigin='top left';fc.style.transform='scale('+sc+')';fw.style.width=(natW*sc)+'px';fw.style.height=(natH*sc)+'px';fw.style.margin='0 auto';}}
 function drawOrgBus(){try{var frow=document.querySelector('.fullc .frow');if(!frow)return;var heads=frow.querySelectorAll('.fcol > .ghead');var ex=frow.querySelector('.fbus');if(heads.length<2){if(ex)ex.remove();return;}function cx(el){var x=0,n=el;while(n&&n!==frow){x+=n.offsetLeft;n=n.offsetParent;}return x+el.offsetWidth/2;}var x1=cx(heads[0]),x2=cx(heads[heads.length-1]);var bus=ex;if(!bus){bus=document.createElement('div');bus.className='fbus';frow.appendChild(bus);}bus.style.left=Math.min(x1,x2)+'px';bus.style.width=Math.abs(x2-x1)+'px';}catch(e){}}
@@ -1108,10 +1122,10 @@ function spawn(x,y,soft){return{x,y,vx:(Math.random()-.5)*.12,vy:-(.05+Math.rand
 function pinit(){parts=[];for(let i=0;i<22;i++){const p=spawn(Math.random()*innerWidth,innerHeight*(.6+Math.random()*.45),true);p.life=Math.random()*p.max;parts.push(p);}}
 function loop(){ctx.clearRect(0,0,W,H);const[c1,c2]=pcol();for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.life++;p.x+=p.vx;p.y+=p.vy;const dx=p.x-mouse.x,dy=p.y-mouse.y,dd=dx*dx+dy*dy;if(dd<13000){const f=(1-dd/13000)*.5;p.x+=dx/Math.sqrt(dd+1)*f;p.y+=dy/Math.sqrt(dd+1)*f;}p.a=Math.sin(Math.min(p.life/p.max,1)*Math.PI)*(p.soft?.22:.4);ctx.beginPath();ctx.fillStyle=i%3===0?c2:c1;ctx.globalAlpha=Math.max(0,p.a);ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();if(p.life>=p.max||p.y<-12){parts.splice(i,1);parts.push(spawn(Math.random()*W,H+10,true));}}ctx.globalAlpha=1;requestAnimationFrame(loop);}
 addEventListener('resize',()=>{if(ctx)resize();});
-addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;if(glow){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';}if(!reduce&&ctx&&parts.length<70&&Math.random()<.16){const p=spawn(e.clientX+(Math.random()-.5)*12,e.clientY+(Math.random()-.5)*12,false);p.max=70+Math.random()*50;parts.push(p);}});
+if(!_isMob){addEventListener('pointermove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;if(glow){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';}if(!reduce&&ctx&&parts.length<70&&Math.random()<.16){const p=spawn(e.clientX+(Math.random()-.5)*12,e.clientY+(Math.random()-.5)*12,false);p.max=70+Math.random()*50;parts.push(p);}},{passive:true});}
 setTheme(lsG(TH)||'light');
 render();
-if(!reduce&&ctx){resize();pinit();loop();}
+if(!reduce&&ctx&&!_isMob){resize();pinit();loop();}
 window.addEventListener('load',function(){if(typeof isMobile==='function'&&isMobile()&&view==='full'&&typeof scaleMobileFull==='function')scaleMobileFull();});
 </script>
 

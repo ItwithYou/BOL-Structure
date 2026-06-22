@@ -688,7 +688,12 @@ function applyUI(){const t=L();document.documentElement.lang=lang;
   $$('#viewseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
   var _el=$('#editLbl');if(_el)_el.textContent=editMode?t.editOn:t.edit;var _sl=$('#shareLbl');if(_sl)_sl.textContent=(lang==='en'?'Save / Share':'ບັນທຶກ / ແບ່ງປັນ');var _rl=$('#resetLbl');if(_rl)_rl.textContent=(lang==='en'?'Reset edits':'ລ້າງການແກ້ໄຂ');
 }
-function typeTicker(text){var el=document.getElementById('tickerText');if(!el)return;el.innerHTML='';var delay=0,step=Math.max(8,Math.min(22,2200/Math.max(1,text.length)));for(var i=0;i<text.length;i++){if(text[i]===' '){el.appendChild(document.createTextNode(' '));continue;}var s=document.createElement('span');s.className='tk-ch';s.textContent=text[i];s.style.animationDelay=delay+'ms';el.appendChild(s);delay+=step;}}
+function typeTicker(text){var el=document.getElementById('tickerText');if(!el)return;el.innerHTML='';
+ var units;
+ try{if(window.Intl&&Intl.Segmenter){var seg=new Intl.Segmenter(lang==='en'?'en':'lo',{granularity:'grapheme'});units=Array.from(seg.segment(text),function(s){return s.segment;});}}catch(e){units=null;}
+ if(!units){units=text.split(/(\s+)/);}  /* fallback: whole words, never break Lao clusters */
+ var delay=0,step=Math.max(8,Math.min(26,2200/Math.max(1,units.length)));
+ units.forEach(function(u){if(!u)return;if(/^\s+$/.test(u)){el.appendChild(document.createTextNode(u));return;}var s=document.createElement('span');s.className='tk-ch';s.textContent=u;s.style.animationDelay=delay+'ms';el.appendChild(s);delay+=step;});}
 function render(){applyUI();if(view==='compare')renderCompare();else if(view==='transfer')renderTransfer();else if(view==='full')renderFull();else renderTree();}
 
 var ZOOM=1,_resizeInit=false,_mBind=false;

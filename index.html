@@ -192,6 +192,19 @@ html[lang=lo] .credit b{font-size:13.5px;letter-spacing:0;line-height:1.5}
 .md-t{font-weight:700;font-size:13px;color:var(--head)}
 .md-j{font-size:12px;color:var(--text);opacity:.92;margin-top:3px;line-height:1.45}
 .mmv{font-size:11px;margin-top:4px;font-weight:600}.mmv.in{color:var(--green)}.mmv.out{color:var(--red)}
+.mdivs-cap{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);opacity:.85;margin:14px 2px 2px}
+.mdacc{padding:0;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.mdacc .md-head{display:flex;align-items:center;gap:9px;padding:11px 13px;cursor:pointer;user-select:none;transition:background .2s}
+.mdacc .md-head:hover{background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.mdacc:active{transform:none}
+.mdacc .md-num{flex:0 0 auto;width:21px;height:21px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--glass2));border:1px solid color-mix(in srgb,var(--accent) 18%,transparent)}
+.mdacc .md-head .md-t{flex:1 1 auto;min-width:0;overflow-wrap:break-word}
+.mdacc .md-cv{flex:0 0 auto;color:var(--muted);opacity:.5;font-size:16px;font-weight:700;transition:transform .28s var(--soft),opacity .2s}
+.mdacc.open{box-shadow:var(--shadow2)}
+.mdacc.open .md-cv{transform:rotate(90deg);opacity:.85}
+.mdacc .md-body{max-height:0;opacity:0;overflow:hidden;padding:0 13px;transition:max-height .32s var(--soft),opacity .22s,padding .25s}
+.mdacc.open .md-body{max-height:1000px;opacity:1;padding:0 13px 12px 43px}
+.mdacc .md-body .md-j{margin-top:0}
 .pill{font-size:9px;font-weight:700;padding:2px 8px;border-radius:30px;margin-left:6px}
 .pill.new,.pill.in{color:#fff;background:var(--green)}.pill.out{color:#fff;background:var(--red)}
 
@@ -242,7 +255,7 @@ html[lang=lo] .credit b{font-size:13.5px;letter-spacing:0;line-height:1.5}
 .mc2:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .mc2:active{transform:scale(.98)}
 .mc2 .mdot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 18%,transparent)}
-.mc2 .mnm{font-size:12px;font-weight:700;color:var(--head);line-height:1.28;flex:1;font-family:'Plus Jakarta Sans','Phetsarath OT','Phetsarath',serif}
+.mc2 .mnm{font-size:12px;font-weight:700;color:var(--head);line-height:1.28;flex:1 1 auto;min-width:0;overflow-wrap:break-word;word-break:break-word;font-family:'Plus Jakarta Sans','Phetsarath OT','Phetsarath',serif}
 .mc2 .mcount{font-size:9px;font-weight:700;color:var(--accent);flex:0 0 auto;background:color-mix(in srgb,var(--accent) 10%,var(--glass2));border:1px solid color-mix(in srgb,var(--accent) 16%,transparent);border-radius:10px;padding:2px 8px;min-width:22px;text-align:center}
 .mc2 .mchev{flex:0 0 auto;color:var(--muted);font-size:14px;opacity:.5;margin-left:-2px}
 .mc2.brc{cursor:default;border-left-color:var(--muted);opacity:.85}
@@ -743,17 +756,21 @@ function closeModal(){var m=document.getElementById('modal');if(m)m.classList.re
 function openBranch(i){var b=SEED.branchInfo,br=SEED.branches[i];var nm2=lang==='en'?(br.en||br.lo):br.lo;document.getElementById('mcard').innerHTML='<button class="mclose" id="mclose">✕</button><div class="mh"><div class="cb-t" style="font-size:17px">'+nm2+'</div><div class="dc-t2" style="font-size:12px">'+(lang==='en'?br.lo:br.en)+'</div></div><div class="mnote">ℹ '+(lang==='en'?b.en:b.lo)+'</div>';document.getElementById('modal').classList.add('open');document.getElementById('mclose').addEventListener('click',closeModal);}
 function openDept(id){var d=SEED.depts.find(function(x){return x.id===id;});if(!d)return;var t=L();
  var chg=(!isOrig()&&d.change)?'<span class="b '+d.change+'">'+(t['c'+cap(d.change)]||'')+'</span>':'';
- var rows=origDivs(d).map(function(v){var i=d.divs.indexOf(v);
+ var dvs=origDivs(d);
+ var rows=dvs.map(function(v,di){var i=d.divs.indexOf(v);
    var pill=(!isOrig()&&v.s!=='kept')?'<span class="pill '+v.s+'">'+t['s'+cap(v.s)]+'</span>':'';
    var mv=isOrig()?'':((v.s==='in'&&dFrom(v))?'<div class="mmv in">'+t.mFrom+': '+dFrom(v)+'</div>':((v.s==='out'&&dTo(v))?'<div class="mmv out">'+t.mTo+': '+dTo(v)+'</div>':''));
    var sc=isOrig()?'kept':v.s;
-   return '<div class="mdiv s-'+sc+'"><div class="md-t">'+eS(d.id,(lang==='en'?'nEn':'n')+i,dN(d,i,v))+' '+pill+'</div><div class="md-j">'+eS(d.id,(lang==='en'?'jEn':'j')+i,dJ(d,i,v))+'</div>'+mv+'</div>';
+   var op=(editMode||di===0)?' open':'';
+   return '<div class="mdiv s-'+sc+' mdacc'+op+'"><div class="md-head"><span class="md-num">'+(di+1)+'</span><div class="md-t">'+eS(d.id,(lang==='en'?'nEn':'n')+i,dN(d,i,v))+' '+pill+'</div><span class="md-cv">›</span></div><div class="md-body"><div class="md-j">'+eS(d.id,(lang==='en'?'jEn':'j')+i,dJ(d,i,v))+'</div>'+mv+'</div></div>';
  }).join('');
+ var capH=dvs.length?'<div class="mdivs-cap">'+(lang==='lo'?('ພະແນກ — '+dvs.length+' ໜ່ວຍ'):('Divisions — '+dvs.length))+'</div>':'';
  var noteH=(!isOrig()&&note(d))?'<div class="mnote">ℹ '+eS(d.id,lang==='en'?'noteEn':'note',note(d))+'</div>':'';
  var titleName = isOrig()?origName(d):(d.mergedName ? (lang==='en'?d.mergedNameEn:d.mergedName) : nm(d));
- document.getElementById('mcard').innerHTML='<button class="mclose" id="mclose">✕</button><div class="mh"><div class="cb-t" style="font-size:17px">'+titleName+' '+chg+'</div>'+(alt(d)?'<div class="dc-t2" style="font-size:12px">'+alt(d)+'</div>':'')+((!isOrig()&&oldN(d))?'<div class="sm">↪ '+oldN(d)+'</div>':'')+'</div>'+noteH+'<div class="mdivs">'+rows+'</div>';
+ document.getElementById('mcard').innerHTML='<button class="mclose" id="mclose">✕</button><div class="mh"><div class="cb-t" style="font-size:17px">'+titleName+' '+chg+'</div>'+(alt(d)?'<div class="dc-t2" style="font-size:12px">'+alt(d)+'</div>':'')+((!isOrig()&&oldN(d))?'<div class="sm">↪ '+oldN(d)+'</div>':'')+'</div>'+noteH+capH+'<div class="mdivs">'+rows+'</div>';
  document.getElementById('modal').classList.add('open');
  document.getElementById('mclose').addEventListener('click',closeModal);
+ if(!editMode){document.querySelectorAll('#mcard .mdacc').forEach(function(it){var h=it.querySelector('.md-head');if(h)h.addEventListener('click',function(){it.classList.toggle('open');});});}
 }
 function renderMobile(){
  var t=L(),ds=SEED.depts,box=document.getElementById('view');

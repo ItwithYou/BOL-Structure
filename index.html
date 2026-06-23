@@ -214,11 +214,18 @@ html[lang=lo] .credit b{font-size:13.5px;letter-spacing:0;line-height:1.5}
 .iconbtn svg{display:block}
 .iconbtn.lang{display:inline-flex;align-items:center;gap:6px}
 .toolmenu{position:relative}
-.toolpop{position:absolute;right:0;top:50px;background:var(--glass);border:1px solid var(--bd);border-radius:15px;box-shadow:var(--shadow);padding:6px;display:none;flex-direction:column;gap:2px;min-width:178px;z-index:60;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-.toolpop.open{display:flex;animation:fade .2s var(--soft)}
-.popitem{display:flex;align-items:center;gap:11px;padding:10px 12px;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:13px;font-weight:600;border-radius:11px;cursor:pointer;text-align:left;width:100%}
-.popitem:hover{background:var(--glass2)}
-.popitem .ic{width:18px;text-align:center;font-size:15px;color:var(--accent);font-weight:700}
+.toolpop{position:absolute;right:0;top:50px;background:color-mix(in srgb,var(--bg2) 94%,var(--glass));border:1px solid var(--bd);border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,.18),0 2px 8px rgba(0,0,0,.08);padding:8px;display:none;flex-direction:column;gap:2px;min-width:210px;z-index:60;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}
+.toolpop.open{display:flex;animation:fade .22s var(--soft)}
+.toolpop .pop-sep{height:1px;background:var(--bd2);margin:4px 8px}
+.popitem{display:flex;align-items:center;gap:12px;padding:11px 14px;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:13px;font-weight:600;border-radius:12px;cursor:pointer;text-align:left;width:100%;transition:background .18s,transform .12s}
+.popitem:hover{background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.popitem:active{transform:scale(.97)}
+.popitem .ic{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-size:15px;color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--glass2));border:1px solid color-mix(in srgb,var(--accent) 14%,transparent)}
+.popitem .lbl-wrap{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+.popitem .lbl{font-size:13px;font-weight:700;color:var(--head);line-height:1.25}
+.popitem .lbl-sub{font-size:10.5px;font-weight:500;color:var(--muted);line-height:1.25;opacity:.85}
+.popitem.danger .ic{color:var(--red);background:color-mix(in srgb,var(--red) 10%,var(--glass2));border-color:color-mix(in srgb,var(--red) 14%,transparent)}
+.popitem.danger .lbl{color:var(--red)}
 @media(max-width:640px){
  main{padding:12px 11px 140px}
  .cbar{justify-content:center}
@@ -569,9 +576,10 @@ body[data-theme=light] .hn-cnt{color:#fff}
     <div class="toolmenu">
       <button class="iconbtn" id="menuBtn" title="Menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.4"></circle><circle cx="12" cy="12" r="1.4"></circle><circle cx="19" cy="12" r="1.4"></circle></svg></button>
       <div class="toolpop" id="toolpop">
-        <button class="popitem" id="editBtn"><span class="ic">✎</span><span class="lbl" id="editLbl"></span></button>
-        <button class="popitem" id="shareBtn"><span class="ic">⬇</span><span class="lbl" id="shareLbl">Save / Share</span></button>
-        <button class="popitem" id="resetBtn"><span class="ic">↺</span><span class="lbl" id="resetLbl">Reset edits</span></button>
+        <button class="popitem" id="editBtn"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4L7 21H3v-4L17 3z"/></svg></span><span class="lbl-wrap"><span class="lbl" id="editLbl"></span><span class="lbl-sub" id="editSub"></span></span></button>
+        <div class="pop-sep"></div>
+        <button class="popitem" id="shareBtn"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="lbl-wrap"><span class="lbl" id="shareLbl">Save / Share</span><span class="lbl-sub" id="shareSub"></span></span></button>
+        <button class="popitem danger" id="resetBtn"><span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/></svg></span><span class="lbl-wrap"><span class="lbl" id="resetLbl">Reset edits</span><span class="lbl-sub" id="resetSub"></span></span></button>
       </div>
     </div>
     <button class="iconbtn lang" id="langBtn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"></path></svg><span>ລາວ</span></button>
@@ -705,7 +713,7 @@ function applyUI(){const t=L();document.documentElement.lang=lang;
   if($('#legend'))$('#legend').style.display=(view==='transfer'||filter==='orig')?'none':'flex';
   var _tk=$('#ticker'),_tkt=$('#tickerText');if(_tk&&_tkt){if(view==='full'){_tk.classList.remove('hide');var _msg=(filter==='orig')?t.msgOrig:t.msgAfter;if(_tk._last!==_msg){_tk._last=_msg;typeTicker(_msg);}}else{_tk.classList.add('hide');_tk._last=null;}}
   $$('#viewseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
-  var _el=$('#editLbl');if(_el)_el.textContent=editMode?t.editOn:t.edit;var _sl=$('#shareLbl');if(_sl)_sl.textContent=(lang==='en'?'Save / Share':'ບັນທຶກ / ແບ່ງປັນ');var _rl=$('#resetLbl');if(_rl)_rl.textContent=(lang==='en'?'Reset edits':'ລ້າງການແກ້ໄຂ');
+  var _el=$('#editLbl');if(_el)_el.textContent=editMode?(lang==='en'?'Editing':'ກຳລັງແກ້ໄຂ'):(lang==='en'?'Edit mode':'ໂໝດແກ້ໄຂ');var _es=$('#editSub');if(_es)_es.textContent=editMode?(lang==='en'?'Tap to stop editing':'ແຕະເພື່ອຢຸດແກ້ໄຂ'):(lang==='en'?'Modify text content':'ປ່ຽນແປງເນື້ອໃນ');var _sl=$('#shareLbl');if(_sl)_sl.textContent=(lang==='en'?'Save / Share':'ບັນທຶກ / ແບ່ງປັນ');var _ss=$('#shareSub');if(_ss)_ss.textContent=(lang==='en'?'Download as HTML file':'ດາວໂຫຼດເປັນໄຟລ໌ HTML');var _rl=$('#resetLbl');if(_rl)_rl.textContent=(lang==='en'?'Reset edits':'ລ້າງການແກ້ໄຂ');var _rs=$('#resetSub');if(_rs)_rs.textContent=(lang==='en'?'Restore original data':'ກັບຄືນຂໍ້ມູນເດີມ');
   var _cl=$('#cr-lbl');if(_cl)_cl.textContent=t.crLabel;var _cn=$('#cr-name');if(_cn){_cn.textContent=t.crName;_cn.className=(lang==='lo'?'lo':'en');}
 }
 function typeTicker(text){var el=document.getElementById('tickerText');if(!el)return;el.innerHTML='';

@@ -765,6 +765,8 @@ function openBranch(i){var b=SEED.branchInfo,br=SEED.branches[i];var nm2=lang===
 function openDept(id){var d=SEED.depts.find(function(x){return x.id===id;});if(!d)return;var t=L();
  var chg=(!isOrig()&&d.change)?'<span class="b '+d.change+'">'+(t['c'+cap(d.change)]||'')+'</span>':'';
  var dvs=origDivs(d);
+ var keptIn=dvs.filter(function(v){return v.s!=='out';});
+ var outDvs=dvs.filter(function(v){return v.s==='out';});
  var rows=dvs.map(function(v,di){var i=d.divs.indexOf(v);
    var pill=(!isOrig()&&v.s!=='kept')?'<span class="pill '+v.s+'">'+t['s'+cap(v.s)]+'</span>':'';
    var mv=isOrig()?'':((v.s==='in'&&dFrom(v))?'<div class="mmv in">'+t.mFrom+': '+dFrom(v)+'</div>':((v.s==='out'&&dTo(v))?'<div class="mmv out">'+t.mTo+': '+dTo(v)+'</div>':''));
@@ -772,7 +774,13 @@ function openDept(id){var d=SEED.depts.find(function(x){return x.id===id;});if(!
    var op=(editMode||di===0)?' open':'';
    return '<div class="mdiv s-'+sc+' mdacc'+op+'"><div class="md-head"><span class="md-num">'+(di+1)+'</span><div class="md-t">'+eS(d.id,(lang==='en'?'nEn':'n')+i,dN(d,i,v))+' '+pill+'</div><span class="md-cv">›</span></div><div class="md-body"><div class="md-j">'+eS(d.id,(lang==='en'?'jEn':'j')+i,dJ(d,i,v))+'</div>'+mv+'</div></div>';
  }).join('');
- var capH=dvs.length?'<div class="mdivs-cap">'+(lang==='lo'?('ພະແນກ — '+dvs.length+' ໜ່ວຍ'):('Divisions — '+dvs.length))+'</div>':'';
+ var capParts=[];
+ if(isOrig()){capParts.push(lang==='lo'?(dvs.length+' ພະແນກ'):(dvs.length+' division'+(dvs.length!==1?'s':'')));}
+ else{
+   if(keptIn.length)capParts.push(lang==='lo'?(keptIn.length+' ພະແນກ'):(keptIn.length+' division'+(keptIn.length!==1?'s':'')));
+   if(outDvs.length)capParts.push(lang==='lo'?(outDvs.length+' ໂອນອອກ'):(outDvs.length+' transferred out'));
+ }
+ var capH=dvs.length?'<div class="mdivs-cap">'+(lang==='lo'?'ພະແນກ — ':'Divisions — ')+capParts.join(lang==='lo'?', ':',  ')+'</div>':'';
  var noteH=(!isOrig()&&note(d))?'<div class="mnote">ℹ '+eS(d.id,lang==='en'?'noteEn':'note',note(d))+'</div>':'';
  var titleName = isOrig()?origName(d):(d.mergedName ? (lang==='en'?d.mergedNameEn:d.mergedName) : nm(d));
  document.getElementById('mcard').innerHTML='<button class="mclose" id="mclose">✕</button><div class="mh"><div class="cb-t" style="font-size:17px">'+titleName+' '+chg+'</div>'+(alt(d)?'<div class="dc-t2" style="font-size:12px">'+alt(d)+'</div>':'')+((!isOrig()&&oldN(d))?'<div class="sm">↪ '+oldN(d)+'</div>':'')+'</div>'+noteH+capH+'<div class="mdivs">'+rows+'</div>';
@@ -784,7 +792,7 @@ function renderMobile(){
  var t=L(),ds=SEED.depts,box=document.getElementById('view');
  var pass=function(d){if(filter==='orig'&&d.change==='new')return false;if(filter==='changed'&&!deptChanged(d))return false;if(filter==='core'&&d.cat!=='core')return false;if(filter==='support'&&d.cat!=='support')return false;if(q){var qq=q.toLowerCase();return (d.name+' '+(d.nameEn||'')+' '+d.divs.map(function(v){return v.n+' '+(v.nEn||'')+' '+v.job+' '+(v.jobEn||'');}).join(' ')).toLowerCase().indexOf(qq)>=0;}return true;};
  function col(d){var c=isOrig()?null:d.change;return c?('var(--'+(c==='new'?'green':c==='merged'?'gold':c==='renamed'?'purple':'teal')+')'):(d.cat==='core'?'var(--accent)':'var(--teal)');}
- function mc(d){var c=col(d);var chg=(!isOrig()&&d.change)?'<span class="b '+d.change+'" style="font-size:8px;margin-left:4px;vertical-align:middle">'+t['c'+cap(d.change)]+'</span>':'';return '<div class="mc2" data-dept="'+d.id+'" style="border-left-color:'+c+'"><span class="mdot" style="background:'+c+';color:'+c+'"></span><span class="mnm">'+(isOrig()?origName(d):nm(d))+chg+'</span><span class="mcount">'+origDivs(d).length+'</span><span class="mchev">›</span></div>';}
+ function mc(d){var c=col(d);var chg=(!isOrig()&&d.change)?'<span class="b '+d.change+'" style="font-size:8px;margin-left:4px;vertical-align:middle">'+t['c'+cap(d.change)]+'</span>':'';var dv=origDivs(d);var cnt=isOrig()?dv.length:dv.filter(function(v){return v.s!=='out';}).length;return '<div class="mc2" data-dept="'+d.id+'" style="border-left-color:'+c+'"><span class="mdot" style="background:'+c+';color:'+c+'"></span><span class="mnm">'+(isOrig()?origName(d):nm(d))+chg+'</span><span class="mcount">'+cnt+'</span><span class="mchev">›</span></div>';}
  function sect(title,list){return list.length?('<div class="msect">'+title+'</div><div class="mgrid">'+list.map(mc).join('')+'</div>'):'';}
  var core=ds.filter(function(d){return grpOf(d)==='central'&&d.cat==='core'&&pass(d);});
  var sup=ds.filter(function(d){return grpOf(d)==='central'&&d.cat==='support'&&pass(d);});

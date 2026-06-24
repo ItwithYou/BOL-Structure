@@ -4683,8 +4683,9 @@
     $('#zoomIn') && $('#zoomIn').addEventListener('click', () => setZoom(ZOOM + .15));
     $('#zoomOut') && $('#zoomOut').addEventListener('click', () => setZoom(ZOOM - .15));
     $('#zoomFit') && $('#zoomFit').addEventListener('click', fit);
+    var editUnlocked = false;
     function setEdit(on) { editMode = on; document.body.classList.toggle('edit', editMode); render(); toast(editMode ? L().toEdit : L().toSave); }
-    $('#editBtn').addEventListener('click', () => { if (!editMode) { var p = prompt(lang === 'en' ? 'Enter password to edit:' : 'ໃສ່ລະຫັດເພື່ອແກ້ໄຂ:'); if (p === null) return; if (p !== 'yang') { toast(lang === 'en' ? 'Wrong password' : 'ລະຫັດບໍ່ຖືກຕ້ອງ'); return; } } setEdit(!editMode); });
+    $('#editBtn').addEventListener('click', () => { if (!editUnlocked) { var p = prompt(lang === 'en' ? 'Enter password to edit:' : 'ໃສ່ລະຫັດເພື່ອແກ້ໄຂ:'); if (p === null) return; if (p !== 'yang') { toast(lang === 'en' ? 'Wrong password' : 'ລະຫັດບໍ່ຖືກຕ້ອງ'); return; } editUnlocked = true; } setEdit(!editMode); });
     $('#editOffBtn') && $('#editOffBtn').addEventListener('click', () => { setEdit(false); });
     $('#resetBtn') && $('#resetBtn').addEventListener('click', function () { if (confirm(lang === 'en' ? 'Reset all edits?' : 'ລ້າງການແກ້ໄຂທັງໝົດ?')) { OVER = {}; lsD(LS); render(); toast(lang === 'en' ? 'Reset done' : 'ລ້າງແລ້ວ'); } });
     $('#menuBtn') && $('#menuBtn').addEventListener('click', function (e) { e.stopPropagation(); var p = $('#toolpop'); if (p) p.classList.toggle('open'); });

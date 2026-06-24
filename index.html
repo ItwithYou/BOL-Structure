@@ -1921,6 +1921,20 @@
       gap: 10px
     }
 
+    @media(max-width:640px) {
+      .mgrid {
+        grid-template-columns: 1fr
+      }
+
+      .mc2 .mnm {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        word-break: normal;
+        overflow-wrap: normal
+      }
+    }
+
     .mc2 {
       position: relative;
       display: flex;
@@ -2353,12 +2367,12 @@
     }
 
     .fullc .dc-t {
-      font-size: 12px;
-      line-height: 1.3
+      font-size: 13px;
+      line-height: 1.32
     }
 
     .fullc .dc-t2 {
-      font-size: 9px
+      font-size: 9.5px
     }
 
     .fullc .dcard .badges {
@@ -4264,11 +4278,9 @@
       if (editMode) { fc.style.width = ''; return; }
       fc.style.width = 'max-content';
       var host = document.getElementById('view');
-      var top = fc.getBoundingClientRect().top;
       var availW = ((host ? host.clientWidth : window.innerWidth)) - 8;
-      var availH = window.innerHeight - top - 14;
       var natW = fc.scrollWidth, natH = fc.scrollHeight;
-      var sc = Math.min(availW / natW, availH / natH, 1);
+      var sc = Math.min(availW / natW, 1);
       if (sc > 0 && isFinite(sc)) {
         fc.style.transformOrigin = 'top left';
         fc.style.transform = 'scale(' + sc + ')';

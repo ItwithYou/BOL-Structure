@@ -2949,12 +2949,29 @@
 
     .mergeflow {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 12px;
       margin: 14px auto 6px;
       width: 100%;
-      max-width: 460px
+      max-width: 800px;
+    }
+    .msrc-divs {
+      margin-top: 14px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .msrc-div {
+      font-size: 11.5px;
+      color: var(--text);
+      background: var(--glass2);
+      border: 1px solid var(--bd2);
+      padding: 6px 10px;
+      border-radius: 8px;
+      text-align: center;
     }
 
     .msrc {
@@ -4822,7 +4839,11 @@
       mergedOrder.forEach(k => {
         const list = mergedGroups[k], d0 = list[0];
         const mName = lang === 'en' ? (d0.mergedNameEn || d0.mergedName) : (d0.mergedName || d0.mergedNameEn);
-        let srcs = list.map(d => `<div class="msrc"><span class="msrc-no"></span><div class="msrc-nm">${nm(d)}${alt(d) ? `<div class="msrc-en">${alt(d)}</div>` : ''}</div></div>`).join('<div class="mplus">+</div>');
+        let srcs = list.map(d => {
+          const beforeList = (d.before || d.divs.filter(v => v.s === 'kept' || v.s === 'out').map((v) => ({ lo: v.n, en: v.nEn })));
+          let divsHtml = beforeList.map(b => `<div class="msrc-div">${lang === 'en' ? (b.en || b.lo) : (b.lo || b.en)}</div>`).join('');
+          return `<div class="msrc"><span class="msrc-no"></span><div class="msrc-nm">${nm(d)}${alt(d) ? `<div class="msrc-en">${alt(d)}</div>` : ''}</div><div class="msrc-divs">${divsHtml}</div></div>`;
+        }).join('<div class="mplus">+</div>');
         const card = el('div', 'cmpcard glass mergecard');
         card.innerHTML = `<div class="cmphead"><div class="t">${lang === 'en' ? 'Merger' : 'ການຄວບລວມກົມ'} <span class="b merged">${t.cMerged}</span></div></div>
       <div class="mergeflow">${srcs}</div>

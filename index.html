@@ -1258,6 +1258,43 @@
       margin-top: 1px
     }
 
+    .dc-abbr {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-bottom: 3px;
+      font-family: 'Plus Jakarta Sans', monospace;
+      line-height: 1.4
+    }
+
+    .m-abbr {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .8px;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-top: 4px;
+      font-family: 'Plus Jakarta Sans', monospace
+    }
+
+    .m-abbr-alt {
+      font-size: 9.5px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .3px;
+      margin-left: 6px
+    }
+
     .dc-more {
       font-size: 10px;
       color: var(--accent);
@@ -4097,6 +4134,11 @@
     };
     const L = () => T[lang];
     const nm = d => lang === 'en' ? (tx(d.id, 'nameEn', d.nameEn) || d.name) : tx(d.id, 'name', d.name);
+    const abbrRx = /\s*\(([^)]+)\)\s*$/;
+    const getAbbr = d => { var n = nm(d); var m = n.match(abbrRx); return m ? m[1] : ''; };
+    const cleanNm = d => nm(d).replace(abbrRx, '');
+    const altClean = d => { var a = lang === 'en' ? tx(d.id, 'name', d.name) : (d.nameEn || ''); return a.replace(abbrRx, ''); };
+    const altAbbr = d => { var a = lang === 'en' ? tx(d.id, 'name', d.name) : (d.nameEn || ''); var m = a.match(abbrRx); return m ? m[1] : ''; };
     const alt = d => lang === 'en' ? tx(d.id, 'name', d.name) : (d.nameEn || '');
     const note = d => lang === 'en' ? (d.noteEn || '') : (d.note || '');
     const dN = (d, i, v) => lang === 'en' ? (tx(d.id, 'nEn' + i, v.nEn) || v.n) : tx(d.id, 'n' + i, v.n);
@@ -4182,7 +4224,8 @@
       var pass = function (d) { if (filter === 'orig' && d.change === 'new') return false; if (filter === 'changed' && !deptChanged(d)) return false; if (filter === 'core' && d.cat !== 'core') return false; if (filter === 'support' && d.cat !== 'support') return false; if (q) { var qq = q.toLowerCase(); return (d.name + ' ' + (d.nameEn || '')).toLowerCase().indexOf(qq) >= 0; } return true; };
       function card(d) {
         var chg = isOrig() ? null : d.change; var badges = '<span class="b ' + d.cat + '">' + (d.cat === 'core' ? t.bCore : t.bSupport) + '</span>' + (chg ? '<span class="b ' + chg + '">' + t['c' + cap(chg)] + '</span>' : '') + (grpOf(d) === 'equiv' ? '<span class="b equiv">' + t.bEquiv + '</span>' : '');
-        return '<div class="dcard ' + (d.cat === 'support' ? 'cat-support ' : '') + (chg || '') + '" data-dept="' + d.id + '"><div class="dc-t">' + (isOrig() ? ('<span>' + origName(d) + '</span>') : eS(d.id, lang === 'en' ? 'nameEn' : 'name', nm(d))) + '</div>' + (alt(d) ? '<div class="dc-t2">' + alt(d) + '</div>' : '') + '<div class="badges">' + badges + '</div></div>';
+        var ab = getAbbr(d); var abH = ab ? '<span class="dc-abbr">' + ab + '</span> ' : '';
+        return '<div class="dcard ' + (d.cat === 'support' ? 'cat-support ' : '') + (chg || '') + '" data-dept="' + d.id + '">' + abH + '<div class="dc-t">' + (isOrig() ? ('<span>' + origName(d).replace(abbrRx, '') + '</span>') : eS(d.id, lang === 'en' ? 'nameEn' : 'name', cleanNm(d))) + '</div>' + (alt(d) ? '<div class="dc-t2">' + altClean(d) + (altAbbr(d) ? ' <span style="font-weight:700;font-style:normal;color:var(--accent);opacity:.7">(' + altAbbr(d) + ')</span>' : '') + '</div>' : '') + '<div class="badges">' + badges + '</div></div>';
       }
       function fcol(title, body) { return '<div class="fcol"><div class="ghead">' + title + '</div><div class="cconn"></div>' + body + '</div>'; }
       var cen = ds.filter(function (d) { return grpOf(d) === 'central' && pass(d); });
@@ -4232,8 +4275,10 @@
       var descText = d.desc ? (lang === 'en' ? d.descEn : d.desc) : '';
       var descH = descText ? '<div class="mdesc" style="font-size:12.5px;line-height:1.45;color:var(--text);margin:12px 14px 6px;padding:12px;background:var(--bg2);border-radius:12px;border:1px solid var(--bd);">' + descText + '</div>' : '';
       var noteH = (!isOrig() && note(d)) ? '<div class="mnote">ℹ ' + eS(d.id, lang === 'en' ? 'noteEn' : 'note', note(d)) + '</div>' : '';
-      var titleName = isOrig() ? origName(d) : (d.mergedName ? (lang === 'en' ? d.mergedNameEn : d.mergedName) : nm(d));
-      document.getElementById('mcard').innerHTML = '<button class=\"mclose\" id=\"mclose\">✕</button><div class=\"mh\"><div class=\"cb-t\" style=\"font-size:17px\">' + titleName + ' ' + chg + '</div>' + (alt(d) ? '<div class=\"dc-t2\" style=\"font-size:12px\">' + alt(d) + '</div>' : '') + ((!isOrig() && oldN(d)) ? '<div class=\"sm\">↪ ' + oldN(d) + '</div>' : '') + '</div>' + descH + noteH + capH + '<div class=\"mdivs\">' + rows + '</div>';
+      var titleName = isOrig() ? origName(d).replace(abbrRx, '') : (d.mergedName ? (lang === 'en' ? d.mergedNameEn : d.mergedName) : cleanNm(d));
+      var mAb = getAbbr(d); var mAbAlt = altAbbr(d);
+      var abbrLine = (mAb || mAbAlt) ? '<div style="margin-top:2px">' + (mAb ? '<span class="m-abbr">' + mAb + '</span>' : '') + (mAbAlt ? '<span class="m-abbr-alt">' + mAbAlt + '</span>' : '') + '</div>' : '';
+      document.getElementById('mcard').innerHTML = '<button class=\"mclose\" id=\"mclose\">✕</button><div class=\"mh\"><div class=\"cb-t\" style=\"font-size:17px\">' + titleName + ' ' + chg + '</div>' + (alt(d) ? '<div class=\"dc-t2\" style=\"font-size:12px\">' + altClean(d) + '</div>' : '') + abbrLine + ((!isOrig() && oldN(d)) ? '<div class=\"sm\">↪ ' + oldN(d) + '</div>' : '') + '</div>' + descH + noteH + capH + '<div class=\"mdivs\">' + rows + '</div>';
       document.getElementById('modal').classList.add('open');
       document.getElementById('mclose').addEventListener('click', closeModal);
       if (!editMode) { document.querySelectorAll('#mcard .mdacc').forEach(function (it) { var h = it.querySelector('.md-head'); if (h) h.addEventListener('click', function () { it.classList.toggle('open'); }); }); }
@@ -4242,7 +4287,7 @@
       var t = L(), ds = SEED.depts, box = document.getElementById('view');
       var pass = function (d) { if (filter === 'orig' && d.change === 'new') return false; if (filter === 'changed' && !deptChanged(d)) return false; if (filter === 'core' && d.cat !== 'core') return false; if (filter === 'support' && d.cat !== 'support') return false; if (q) { var qq = q.toLowerCase(); return (d.name + ' ' + (d.nameEn || '') + ' ' + d.divs.map(function (v) { return v.n + ' ' + (v.nEn || '') + ' ' + v.job + ' ' + (v.jobEn || ''); }).join(' ')).toLowerCase().indexOf(qq) >= 0; } return true; };
       function col(d) { var c = isOrig() ? null : d.change; return c ? ('var(--' + (c === 'new' ? 'green' : c === 'merged' ? 'gold' : c === 'renamed' ? 'purple' : 'teal') + ')') : (d.cat === 'core' ? 'var(--accent)' : 'var(--teal)'); }
-      function mc(d) { var c = col(d); var chg = (!isOrig() && d.change) ? '<span class="b ' + d.change + '" style="font-size:8px;margin-left:4px;vertical-align:middle">' + t['c' + cap(d.change)] + '</span>' : ''; var dv = origDivs(d); var cnt = isOrig() ? dv.length : dv.filter(function (v) { return v.s !== 'out'; }).length; return '<div class="mc2" data-dept="' + d.id + '" style="border-left-color:' + c + '"><span class="mdot" style="background:' + c + ';color:' + c + '"></span><span class="mnm">' + (isOrig() ? origName(d) : nm(d)) + chg + '</span><span class="mcount">' + cnt + '</span><span class="mchev">›</span></div>'; }
+      function mc(d) { var c = col(d); var chg = (!isOrig() && d.change) ? '<span class="b ' + d.change + '" style="font-size:8px;margin-left:4px;vertical-align:middle">' + t['c' + cap(d.change)] + '</span>' : ''; var dv = origDivs(d); var cnt = isOrig() ? dv.length : dv.filter(function (v) { return v.s !== 'out'; }).length; var ab = getAbbr(d); var abTag = ab ? '<span class="dc-abbr" style="margin-right:6px;vertical-align:middle">' + ab + '</span>' : ''; return '<div class="mc2" data-dept="' + d.id + '" style="border-left-color:' + c + '"><span class="mdot" style="background:' + c + ';color:' + c + '"></span>' + abTag + '<span class="mnm">' + (isOrig() ? origName(d).replace(abbrRx,'') : cleanNm(d)) + chg + '</span><span class="mcount">' + cnt + '</span><span class="mchev">›</span></div>'; }
       function sect(title, list) { return list.length ? ('<div class="msect">' + title + '</div><div class="mgrid">' + list.map(mc).join('') + '</div>') : ''; }
       var core = ds.filter(function (d) { return grpOf(d) === 'central' && d.cat === 'core' && pass(d); });
       var sup = ds.filter(function (d) { return grpOf(d) === 'central' && d.cat === 'support' && pass(d); });
@@ -4601,7 +4646,7 @@
       others.forEach(d => {
         if (d.change === 'reclassified') {
           const card = el('div', 'cmpcard glass reclasscard');
-          card.innerHTML = `<div class="cmphead"><div class="t">${nm(d)} <span class="b reclassified">${t.cReclassified}</span></div>${alt(d) ? `<div class="t2">${alt(d)}</div>` : ''}</div>
+          card.innerHTML = `<div class="cmphead">${getAbbr(d) ? `<span class="dc-abbr">${getAbbr(d)}</span> ` : ''}<div class="t">${cleanNm(d)} <span class="b reclassified">${t.cReclassified}</span></div>${alt(d) ? `<div class="t2">${altClean(d)}${altAbbr(d) ? ` <span style="font-weight:700;color:var(--accent);opacity:.7">(${altAbbr(d)})</span>` : ''}</div>` : ''}</div>
         ${oldN(d) ? `<div class="reclassflow">${oldN(d)}</div>` : ''}
         ${note(d) ? `<div class="cmpnote">ℹ ${note(d)}</div>` : ''}`;
           grid.appendChild(card);
@@ -4615,7 +4660,7 @@
         const card = el('div', 'cmpcard glass');
         let beforeHtml = beforeList.length ? beforeList.map(b => { const nme = bN(b); const rem = !afterNames.has(nme); const at = (b._i != null) ? ` data-dept="${d.id}" data-di="${b._i}"` : ''; return `<div class="di clik ${rem ? 'rem' : ''}"${at}>${nme}${rem ? `<span class="tag">${t.removed}</span>` : ''}</div>`; }).join('') : `<div class="cmpempty">${beforeNote(d) || '—'}</div>`;
         let afterHtml = afterDivs.map((v) => { const i = d.divs.indexOf(v); const nme = dN(d, i, v); const add = v.s === 'new' || v.s === 'in' || !beforeNames.has(nme); return `<div class="di clik ${add ? 'add' : ''}" data-dept="${d.id}" data-di="${i}">${nme}${add ? `<span class="tag">${t.added}</span>` : ''}</div>`; }).join('');
-        card.innerHTML = `<div class="cmphead"><div class="t">${nm(d)} ${chgBadge}</div>${alt(d) ? `<div class="t2">${alt(d)}</div>` : ''}</div>
+        card.innerHTML = `<div class="cmphead">${getAbbr(d) ? `<span class="dc-abbr">${getAbbr(d)}</span> ` : ''}<div class="t">${cleanNm(d)} ${chgBadge}</div>${alt(d) ? `<div class="t2">${altClean(d)}${altAbbr(d) ? ` <span style="font-weight:700;color:var(--accent);opacity:.7">(${altAbbr(d)})</span>` : ''}</div>` : ''}</div>
       <div class="cmpcols">
         <div class="cmpcol"><h4><span class="dot" style="background:var(--muted)"></span>${t.before}</h4>${beforeHtml}</div>
         <div class="cmpcol"><h4><span class="dot" style="background:var(--green)"></span>${t.after}</h4>${afterHtml}</div>

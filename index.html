@@ -4415,7 +4415,7 @@
         var pill = (!isOrig() && v.s !== 'kept') ? '<span class="pill ' + v.s + '">' + t['s' + cap(v.s)] + '</span>' : '';
         var mv = isOrig() ? '' : ((v.s === 'in' && dFrom(v)) ? '<div class="mmv in">' + t.mFrom + ': ' + dFrom(v) + '</div>' : ((v.s === 'out' && dTo(v)) ? '<div class="mmv out">' + t.mTo + ': ' + dTo(v) + '</div>' : ''));
         var sc = isOrig() ? 'kept' : v.s;
-        var op = (editMode || di === 0) ? ' open' : '';
+        var op = editMode ? ' open' : '';
         return '<div class="mdiv s-' + sc + ' mdacc' + op + '"><div class="md-head"><span class="md-num">' + (di + 1) + '</span><div class="md-t">' + eS(d.id, (lang === 'en' ? 'nEn' : 'n') + i, dN(d, i, v)) + ' ' + pill + '</div><span class="md-cv">›</span></div><div class="md-body"><div class="md-j">' + eS(d.id, (lang === 'en' ? 'jEn' : 'j') + i, dJ(d, i, v)) + '</div>' + mv + '</div></div>';
       }).join('');
       var capParts = [];

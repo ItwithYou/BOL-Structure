@@ -765,6 +765,16 @@
       padding: 0 4px
     }
 
+    [contenteditable=true],
+    body.edit [data-edit],
+    body.edit .mdacc .md-head,
+    body.edit .md-t,
+    body.edit .md-j {
+      -webkit-user-select: text !important;
+      user-select: text !important;
+      cursor: text
+    }
+
     /* compare */
     .cmpgrid {
       display: grid;

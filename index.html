@@ -1377,6 +1377,8 @@
       width: 100%;
       max-height: 86vh;
       overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       border-radius: 22px;
       padding: 20px 20px 24px;
       position: relative;
@@ -1547,17 +1549,26 @@
     }
 
     .mdacc .md-body {
-      max-height: 0;
+      display: grid;
+      grid-template-rows: 0fr;
       opacity: 0;
-      overflow: hidden;
-      padding: 0 13px;
-      transition: max-height .32s var(--soft), opacity .22s, padding .25s
+      transition: grid-template-rows .3s var(--soft), opacity .24s var(--soft);
+      will-change: grid-template-rows
     }
 
     .mdacc.open .md-body {
-      max-height: 1000px;
-      opacity: 1;
-      padding: 0 13px 12px 43px
+      grid-template-rows: 1fr;
+      opacity: 1
+    }
+
+    .mdacc .md-inner {
+      min-height: 0;
+      overflow: hidden;
+      padding: 0 13px 0 43px
+    }
+
+    .mdacc.open .md-inner {
+      padding-bottom: 12px
     }
 
     .mdacc .md-body .md-j {
@@ -4263,7 +4274,7 @@
         var mv = isOrig() ? '' : ((v.s === 'in' && dFrom(v)) ? '<div class="mmv in">' + t.mFrom + ': ' + dFrom(v) + '</div>' : ((v.s === 'out' && dTo(v)) ? '<div class="mmv out">' + t.mTo + ': ' + dTo(v) + '</div>' : ''));
         var sc = isOrig() ? 'kept' : v.s;
         var op = editMode ? ' open' : '';
-        return '<div class="mdiv s-' + sc + ' mdacc' + op + '"><div class="md-head"><span class="md-num">' + (di + 1) + '</span><div class="md-t">' + eS(d.id, (lang === 'en' ? 'nEn' : 'n') + i, dN(d, i, v)) + ' ' + pill + '</div><span class="md-cv">›</span></div><div class="md-body"><div class="md-j">' + eS(d.id, (lang === 'en' ? 'jEn' : 'j') + i, dJ(d, i, v)) + '</div>' + mv + '</div></div>';
+        return '<div class="mdiv s-' + sc + ' mdacc' + op + '"><div class="md-head"><span class="md-num">' + (di + 1) + '</span><div class="md-t">' + eS(d.id, (lang === 'en' ? 'nEn' : 'n') + i, dN(d, i, v)) + ' ' + pill + '</div><span class="md-cv">›</span></div><div class="md-body"><div class="md-inner"><div class="md-j">' + eS(d.id, (lang === 'en' ? 'jEn' : 'j') + i, dJ(d, i, v)) + '</div>' + mv + '</div></div></div>';
       }).join('');
       var capParts = [];
       if (isOrig()) { capParts.push(lang === 'lo' ? (dvs.length + ' ພະແນກ') : (dvs.length + ' division' + (dvs.length !== 1 ? 's' : ''))); }

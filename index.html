@@ -4240,7 +4240,7 @@
       requestAnimationFrame(drawOrgBus); setTimeout(drawOrgBus, 120); setTimeout(drawOrgBus, 420);
       if (isMobile()) { requestAnimationFrame(scaleMobileFull); setTimeout(scaleMobileFull, 350); setTimeout(scaleMobileFull, 900); }
       if (!_mBind) { _mBind = true; var m = document.getElementById('modal'); if (m) m.addEventListener('click', function (e) { if (e.target === m) closeModal(); }); document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); }); }
-      if (!_resizeInit) { _resizeInit = true; window.addEventListener('resize', function () { clearTimeout(window._rz); window._rz = setTimeout(render, 250); }); }
+      if (!_resizeInit) { _resizeInit = true; window._lastW = window.innerWidth; window.addEventListener('resize', function () { if (editMode) return; if (window.innerWidth === window._lastW) return; window._lastW = window.innerWidth; clearTimeout(window._rz); window._rz = setTimeout(render, 250); }); }
     }
     function closeModal() { var m = document.getElementById('modal'); if (m) m.classList.remove('open'); }
     function openBranch(i) { var b = SEED.branchInfo, br = SEED.branches[i]; var nm2 = lang === 'en' ? (br.en || br.lo) : br.lo; document.getElementById('mcard').innerHTML = '<button class="mclose" id="mclose">✕</button><div class="mh"><div class="cb-t" style="font-size:17px">' + nm2 + '</div><div class="dc-t2" style="font-size:12px">' + (lang === 'en' ? br.lo : br.en) + '</div></div><div class="mnote">ℹ ' + (lang === 'en' ? b.en : b.lo) + '</div>'; document.getElementById('modal').classList.add('open'); document.getElementById('mclose').addEventListener('click', closeModal); }

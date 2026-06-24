@@ -1927,9 +1927,6 @@
       }
 
       .mc2 .mnm {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
         word-break: normal;
         overflow-wrap: normal
       }
@@ -4278,9 +4275,11 @@
       if (editMode) { fc.style.width = ''; return; }
       fc.style.width = 'max-content';
       var host = document.getElementById('view');
+      var top = fc.getBoundingClientRect().top;
       var availW = ((host ? host.clientWidth : window.innerWidth)) - 8;
+      var availH = window.innerHeight - top - 12;
       var natW = fc.scrollWidth, natH = fc.scrollHeight;
-      var sc = Math.min(availW / natW, 1);
+      var sc = Math.min(availW / natW, availH / natH, 1);
       if (sc > 0 && isFinite(sc)) {
         fc.style.transformOrigin = 'top left';
         fc.style.transform = 'scale(' + sc + ')';
@@ -4306,8 +4305,10 @@
       var cols = '';
       if ((filter === 'all' || filter === 'orig') && !q) { cols += fcol(t.gLocal, '<div class="cstack">' + SEED.branches.map(function (b, bi) { return b.office ? '' : '<div class="dcard br" data-branch="' + bi + '"><div class="dc-t">' + bN(b) + '</div></div>'; }).join('') + '</div>'); }
       if (cen.length) {
-        var h = Math.ceil(cen.length / 2), c1 = cen.slice(0, h), c2 = cen.slice(h);
-        cols += fcol(t.gCentral, '<div class="colcards"><div class="cstack">' + c1.map(card).join('') + '</div>' + (c2.length ? '<div class="cstack">' + c2.map(card).join('') + '</div>' : '') + '</div>');
+        var ncol = (isMobile() || window.innerWidth < 1500) ? 2 : 3;
+        var per = Math.ceil(cen.length / ncol), chunks = [];
+        for (var ci = 0; ci < cen.length; ci += per) chunks.push(cen.slice(ci, ci + per));
+        cols += fcol(t.gCentral, '<div class="colcards">' + chunks.map(function (ch) { return '<div class="cstack">' + ch.map(card).join('') + '</div>'; }).join('') + '</div>');
       }
       if (eqv.length) { cols += fcol(t.gEquiv, '<div class="cstack">' + eqv.map(card).join('') + '</div>'); }
       var comm = ((filter === 'all' || filter === 'orig') && !q) ? '<div class="commrow">' + SEED.committees.map(function (c) { return '<div class="compill">' + bN(c) + '</div>'; }).join('') + '</div><div class="conn"></div>' : '';
